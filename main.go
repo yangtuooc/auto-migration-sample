@@ -1,9 +1,16 @@
-package auto_migration_sample
+package main
 
-import "auto-migration-sample/store"
+import (
+	"auto-migration-sample/common"
+	"auto-migration-sample/routes"
+)
 
 func main() {
+	startup()
+}
 
-	store.Init()
-
+func startup() {
+	common.Viper()
+	common.Gorm()
+	routes.Bootstrap()
 }

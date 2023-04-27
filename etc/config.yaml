@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  context: /api
+
+#mysql:
+#  host: mysql
+#  port: 3306
+#  database: auto_migration_sample
+#  username: sample
+#  password: W9VuhRXYZcdR33PDt8hUQuwFzCCxriWc
+
+mysql:
+  host: localhost
+  port: 3306
+  database: bmc_zhuque
+  username: root
+  password: 123456
