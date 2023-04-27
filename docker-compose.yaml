@@ -10,27 +10,29 @@ services:
     ports:
       - 3400:3306
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./mysql-data:/var/lib/mysql
     networks:
       - auto-migration-sample-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   liquibase:
-    image: ./migrations/liquibase
+    build: ./migrations/liquibase
     restart: "no"
     depends_on:
       mysql:
         condition: service_healthy # 当数据库启动成功后再进行表结构变更
     environment:
-      - DB_URL=jdbc:mysql://mysql:3306/aut_migration_sample?allowPublicKeyRetrieval=true
+      - DB_URL=jdbc:mysql://mysql/auto_migration_sample?allowPublicKeyRetrieval=true
       - DB_USERNAME=sample
       - DB_PASSWORD=W9VuhRXYZcdR33PDt8hUQuwFzCCxriWc
     volumes:
-      - ./docker/liquibase/changelog:/liquibase/changelog
+      - ./migrations/liquibase/changelog:/liquibase/changelog
     networks:
       - auto-migration-sample-network
-
-volumes:
-  mysql-data:
 
 networks:
   auto-migration-sample-network:
