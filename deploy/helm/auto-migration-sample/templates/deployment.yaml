@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auto-migration-sample-deployment
+  labels:
+    app: auto-migration-sample
+spec:
+  selector:
+    matchLabels:
+      app: auto-migration-sample
+
+  template:
+    metadata:
+      labels:
+        app: auto-migration-sample
+    spec:
+      containers:
+        - name: {{ .Values.server.name }}
+          image: {{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}
+          ports:
+            - containerPort: {{ .Values.server.port }}

@@ -1,0 +1,37 @@
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: auto_migration_sample
+      MYSQL_USER: sample
+      MYSQL_PASSWORD: W9VuhRXYZcdR33PDt8hUQuwFzCCxriWc
+      MYSQL_ROOT_PASSWORD: jQcKPf2zrLNSXf8sxGFyvK2AcNHT7nrn
+      TZ: Asia/shanghai
+    ports:
+      - 3400:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - auto-migration-sample-network
+
+  liquibase:
+    image: ./migrations/liquibase
+    restart: "no"
+    depends_on:
+      mysql:
+        condition: service_healthy # 当数据库启动成功后再进行表结构变更
+    environment:
+      - DB_URL=jdbc:mysql://mysql:3306/aut_migration_sample?allowPublicKeyRetrieval=true
+      - DB_USERNAME=sample
+      - DB_PASSWORD=W9VuhRXYZcdR33PDt8hUQuwFzCCxriWc
+    volumes:
+      - ./docker/liquibase/changelog:/liquibase/changelog
+    networks:
+      - auto-migration-sample-network
+
+volumes:
+  mysql-data:
+
+networks:
+  auto-migration-sample-network:
+    driver: bridge

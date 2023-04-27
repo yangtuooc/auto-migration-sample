@@ -1,0 +1,13 @@
+server:
+  name: auto-migration-sample
+  port: 8888
+  image:
+    repository: yangtuooc/auto-migration-sample
+    tag: 0.0.1
+    pullPolicy: IfNotPresent
+
+auth:
+  rootPassword: jQcKPf2zrLNSXf8sxGFyvK2AcNHT7nrn
+  database: "auto-migration-sample"
+  username: "sample"
+  password: "W9VuhRXYZcdR33PDt8hUQuwFzCCxriWc"
