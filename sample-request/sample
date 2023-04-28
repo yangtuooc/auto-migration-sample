@@ -1,0 +1,5 @@
+#!/bin/bash
+
+curl http://localhost:8080/api/user?name=羊驼 | jq
+
+curl -X POST http://localhost:8080/api/user -H "Content-Type: application/json" -d '{"name":"野草","age":18}' | jq

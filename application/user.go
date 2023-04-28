@@ -10,13 +10,9 @@ import (
 
 func GetUser(c *gin.Context) {
 
+	queryParam := c.Query("name")
 	user := domain.EmptyUser()
-	err := BindFromQueryString(c, &user)
-	if err != nil {
-		response.Fail(http.StatusBadRequest, err.Error(), c)
-	}
-
-	err = common.UseDB().Where(&user).First(&user).Error
+	err := common.UseDB().Where("name=?", queryParam).First(&user).Error
 	if err != nil {
 		response.Fail(http.StatusInternalServerError, err.Error(), c)
 	}
@@ -35,4 +31,5 @@ func RegisterUser(c *gin.Context) {
 	if err != nil {
 		response.Fail(http.StatusInternalServerError, err.Error(), c)
 	}
+	response.Success(c, map[string]any{"id": user.ID})
 }

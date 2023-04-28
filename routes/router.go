@@ -16,8 +16,8 @@ func Bootstrap() {
 }
 
 func setupRoute(router *gin.Engine) {
-	router.Group(common.Cfg.Server.UseContext())
-	router.GET("/ping", application.Ping)
-	router.GET("/user", application.GetUser)
-	router.POST("/user", application.RegisterUser)
+	apiGroup := router.Group(common.Cfg.Server.UseContext())
+	apiGroup.GET("/ping", application.Ping)
+	apiGroup.GET("/user", application.GetUser)
+	apiGroup.POST("/user", application.RegisterUser)
 }

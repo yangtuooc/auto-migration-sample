@@ -11,21 +11,27 @@ type Response struct {
 	Msg  string `json:"msg"`
 }
 
-func Fail(httpStatus int, message string, c *gin.Context, data ...any) {
+func Fail(httpStatus int, message string, c *gin.Context) {
+	c.JSON(httpStatus, Response{
+		Msg: message,
+	})
+}
+
+func FailWith(httpStatus int, message string, c *gin.Context, data any) {
 	c.JSON(httpStatus, Response{
 		Data: data,
 		Msg:  message,
 	})
 }
 
-func Success(c *gin.Context, data ...any) {
+func Success(c *gin.Context, data any) {
 	c.JSON(http.StatusOK, Response{
 		Data: data,
 		Msg:  "success",
 	})
 }
 
-func SuccessWith(httpStatus int, message string, c *gin.Context, data ...any) {
+func SuccessWith(httpStatus int, message string, c *gin.Context, data any) {
 	c.JSON(httpStatus, Response{
 		Data: data,
 		Msg:  message,
