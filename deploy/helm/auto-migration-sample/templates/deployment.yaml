@@ -19,3 +19,9 @@ spec:
           image: {{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}
           ports:
             - containerPort: {{ .Values.server.port }}
+      initContainers:
+        - name: liquibase
+          image: liquibase/liquibase:4.3.5
+          envFrom:
+            - secretRef:
+                name: liquibaseSecret
